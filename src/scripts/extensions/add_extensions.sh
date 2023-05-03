@@ -49,6 +49,7 @@ enable_extension() {
     enable_extension_dependencies "$1" "$2"
     enable_cache_extension_dependencies "$1" "$2"
     if ! [[ "${version:?}" =~ ${old_versions:?} ]] && command -v phpenmod >/dev/null 2>&1; then
+      sudo sed -Ei "/=(.*\/)?\"?$extension(.so)?$/d" "$pecl_file"
       mod="${ini_dir:?}"/../mods-available/"$1".ini
       if ! [ -e "$mod" ]; then
         priority="${3:-20}";
